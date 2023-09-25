@@ -30,8 +30,8 @@ A step by step series of examples that tell you how to get a development env run
 In order to run in development mode
 
 ```
-./gradlew clean build
-java -jar .\build\libs\calculator-0.0.1-SNAPSHOT.jar com.globalsavings.calculator.CalculatorApplication
+1) ./gradlew clean build
+2) java -jar .\build\libs\calculator-0.0.1-SNAPSHOT.jar com.globalsavings.calculator.CalculatorApplication
 ```
 
 ## Usage <a name = "usage"></a>
