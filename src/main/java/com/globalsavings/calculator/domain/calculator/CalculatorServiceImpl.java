@@ -1,5 +1,8 @@
 package com.globalsavings.calculator.domain.calculator;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.springframework.stereotype.Service;
 
 import com.globalsavings.calculator.domain.exception.ItemNotFoundException;
@@ -22,8 +25,12 @@ public class CalculatorServiceImpl implements CalculatorService {
             throw new ItemNotFoundException(msg);
         }
 
-        double netPrice = (1 - region.getVAT()) * grossPrice;
-        log.info("For country ISO="+countryIso+" net price=" + netPrice);
+        BigDecimal actualPercentage = BigDecimal.valueOf(1).subtract(BigDecimal.valueOf(region.getVAT()));
+        BigDecimal price = BigDecimal.valueOf(grossPrice);
+
+        double netPrice = price.multiply(actualPercentage).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+        log.info("For country ISO = " + countryIso + ", net price = " + netPrice);
 
         CalculatorModel calculatorModel = new CalculatorModel();
         calculatorModel.setCountryIso(countryIso);
