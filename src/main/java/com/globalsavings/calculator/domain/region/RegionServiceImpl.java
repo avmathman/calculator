@@ -81,5 +81,10 @@ public class RegionServiceImpl implements RegionService {
         log.info("Retrieved all existing region information.");
         return REGIONS.values().stream().collect(Collectors.toList());
     }
+
+    @Override
+    public void clearRegions() {
+        REGIONS.clear();
+    }
     
 }

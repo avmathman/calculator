@@ -44,4 +44,9 @@ public interface RegionService {
      * @return The list of regions.
      */
     List<RegionModel> getAllRegions();
+
+    /**
+     * Clears all regions.
+     */
+    void clearRegions();
 }
