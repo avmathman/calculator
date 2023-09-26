@@ -12,7 +12,6 @@ import java.lang.annotation.*;
 
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-//@WebAppConfiguration
 @SpringBootTest(classes = {CalculatorApplication.class})
 @Inherited
 @ExtendWith(SpringExtension.class)
