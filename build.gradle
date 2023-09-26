@@ -38,6 +38,16 @@ repositories {
 	maven { url 'https://repo.spring.io/snapshot' }
 }
 
+sourceSets {
+	integrationTest {
+		java {
+			compileClasspath += main.output + test.output + main.compileClasspath + test.compileClasspath
+			runtimeClasspath += main.output + test.output + main.runtimeClasspath + test.runtimeClasspath
+			srcDir file('src/integration-test/java')
+		}
+	}
+}
+
 dependencies {
 
 	// Spring dependencies:
@@ -63,4 +73,13 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+task integrationTest(type: Test) {
+	useJUnitPlatform()
+	description = "Runs the integration tests"
+	group = "verification"
+	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+	classpath = sourceSets.integrationTest.runtimeClasspath
+	maxHeapSize = "1024m"
 }
