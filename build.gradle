@@ -38,6 +38,16 @@ repositories {
 	maven { url 'https://repo.spring.io/snapshot' }
 }
 
+sourceSets {
+	integrationTest {
+		java {
+			compileClasspath += main.output + test.output + main.compileClasspath + test.compileClasspath
+			runtimeClasspath += main.output + test.output + main.runtimeClasspath + test.runtimeClasspath
+			srcDir file('src/integration-test/java')
+		}
+	}
+}
+
 dependencies {
 
 	// Spring dependencies:

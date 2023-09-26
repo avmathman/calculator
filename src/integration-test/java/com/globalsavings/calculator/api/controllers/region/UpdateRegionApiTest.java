@@ -1,9 +1,12 @@
 package com.globalsavings.calculator.api.controllers.region;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.globalsavings.calculator.api.advices.ApiErrorResponse;
+import com.globalsavings.calculator.api.controllers.region.dto.RegionDto;
+import com.globalsavings.calculator.domain.region.RegionModel;
+import com.globalsavings.calculator.domain.region.RegionModelMapper;
+import com.globalsavings.calculator.domain.region.RegionService;
+import com.globalsavings.calculator.utils.RegionUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,13 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.globalsavings.calculator.api.advices.ApiErrorResponse;
-import com.globalsavings.calculator.api.controllers.region.dto.RegionDto;
-import com.globalsavings.calculator.domain.region.RegionModel;
-import com.globalsavings.calculator.domain.region.RegionModelMapper;
-import com.globalsavings.calculator.domain.region.RegionService;
-import com.globalsavings.calculator.utils.RegionUtils;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
