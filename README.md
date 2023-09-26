@@ -28,11 +28,28 @@ Gradle 8.2.1
 A step by step series of examples that tell you how to get a development env running.
 
 In order to run in development mode
-
 ```
 1) ./gradlew clean build
 2) java -jar .\build\libs\calculator-0.0.1-SNAPSHOT.jar com.globalsavings.calculator.CalculatorApplication
 ```
+## Execution
+### Running in development mode
+```
+1) ./gradlew clean build
+2) java -jar .\build\libs\calculator-0.0.1-SNAPSHOT.jar com.globalsavings.calculator.CalculatorApplication
+```
+
+### Testing
+```
+./gradlew test
+```
+
+### Runing Application through Docker
+Running through Docker
+```
+1) docker build --build-arg JAR_FILE=build/libs/calculator-0.0.1-SNAPSHOT.jar -t globalsavings/calculator .
+2) docker run -p 8080:8080 globalsavings/calculator
+``````
 
 ## Usage <a name = "usage"></a>
 
