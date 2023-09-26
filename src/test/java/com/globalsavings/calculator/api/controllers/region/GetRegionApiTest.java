@@ -1,4 +1,4 @@
-package com.globalsavings.calculator.api.controllers.calculator;
+package com.globalsavings.calculator.api.controllers.region;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

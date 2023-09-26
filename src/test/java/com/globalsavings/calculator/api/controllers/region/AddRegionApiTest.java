@@ -1,7 +1,7 @@
-package com.globalsavings.calculator.api.controllers.calculator;
+package com.globalsavings.calculator.api.controllers.region;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.globalsavings.calculator.api.advices.ApiErrorResponse;
+import com.globalsavings.calculator.api.controllers.region.dto.RegionDto;
 import com.globalsavings.calculator.domain.region.RegionModel;
 import com.globalsavings.calculator.domain.region.RegionService;
 import com.globalsavings.calculator.utils.RegionUtils;
@@ -22,7 +23,7 @@ import com.globalsavings.calculator.utils.RegionUtils;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class DeleteRegionApiTest {
+public class AddRegionApiTest {
 
     private static final String REGON_API_URL = "/api/region";
 
@@ -42,30 +43,47 @@ public class DeleteRegionApiTest {
         if(this.regionUtils == null) {
             this.regionUtils = new RegionUtils();
         }
+
+        this.regionService.clearRegions();
     }
 
     @Test
-    public void deleteRegion_removeExistingItem_returnAddedRegion() throws Exception {
+    public void addRegion_addNewRegion_returnAddedRegion() throws Exception {
 
         //Assign
+        RegionDto dto = this.regionUtils.createRegionDefaultDto();
+
+        //Act
+        String response = mockMvc.perform(post(REGON_API_URL)
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+
+        RegionDto createdDto = objectMapper.readValue(response, RegionDto.class);
+
+        //Assert
+        assertThat(createdDto.getCountryIso()).isEqualTo(dto.getCountryIso());
+        assertThat(createdDto.getCountryName()).isEqualTo(dto.getCountryName());
+        assertThat(createdDto.getVAT()).isEqualTo(dto.getVAT());
+    }
+
+    @Test
+    public void addRegion_duplicateCountryIso_throwsDuplicateItemException() throws Exception {
+
+        //Assign
+        RegionDto dto = this.regionUtils.createRegionDefaultDto();
         RegionModel model = this.regionUtils.createDefaultRegionModel();
+        String msg = String.format("Region with country ISO=%s exists!", dto.getCountryIso());
         this.regionService.addRegion(model);
-
+        
         //Act
-        mockMvc.perform(delete(REGON_API_URL+"/" + model.getCountryIso()))
-            .andExpect(status().isNoContent());
-    }
-
-    @Test
-    public void deleteRegion_deleteNotExistingItem_throwsItemNotFoundException() throws Exception {
-
-        //Assign
-        String countryIso = "AA";
-        String msg = String.format("Region with country ISO=%s does not exist to delete", countryIso);
-
-        //Act
-        String response = mockMvc.perform(delete(REGON_API_URL + "/" + countryIso))
-            .andExpect(status().isNotFound())
+        String response = mockMvc.perform(post(REGON_API_URL)
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isConflict())
             .andReturn()
             .getResponse()
             .getContentAsString();
@@ -73,6 +91,7 @@ public class DeleteRegionApiTest {
         ApiErrorResponse error = objectMapper.readValue(response, ApiErrorResponse.class);
 
         //Assert
+        assertThat(error.getStatus().value()).isEqualTo(409);
         assertThat(error.getMessage()).isEqualTo(msg);
 
     }
