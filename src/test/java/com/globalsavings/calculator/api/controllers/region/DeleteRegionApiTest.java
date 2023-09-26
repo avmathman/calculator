@@ -42,6 +42,8 @@ public class DeleteRegionApiTest {
         if(this.regionUtils == null) {
             this.regionUtils = new RegionUtils();
         }
+
+        this.regionService.clearRegions();
     }
 
     @Test

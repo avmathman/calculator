@@ -20,6 +20,7 @@ public class CalculatorServiceImplTest {
     public void setUp() {
         this.regionService = new RegionServiceImpl();
         this.calculatorService = new CalculatorServiceImpl();
+        this.regionService.clearRegions();
     }
 
     

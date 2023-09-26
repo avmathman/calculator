@@ -45,6 +45,8 @@ public class GetCalculatorApiTest {
         if(this.regionUtils == null) {
             this.regionUtils = new RegionUtils();
         }
+
+        this.regionService.clearRegions();
     }
 
     @Test
