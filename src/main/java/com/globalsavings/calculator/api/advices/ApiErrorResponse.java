@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @Setter
 @NoArgsConstructor
-class ApiErrorResponse {
+public class ApiErrorResponse {
 
     /**
      * Creates new instance of API error response
