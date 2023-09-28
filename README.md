@@ -47,7 +47,7 @@ In order to run in development mode
 ### Runing Application through Docker
 Running through Docker
 ```
-1) docker build --build-arg JAR_FILE=build/libs/calculator-0.0.1-SNAPSHOT.jar -t globalsavings/calculator .
+1) docker build -t globalsavings/calculator .
 2) docker run -p 8080:8080 globalsavings/calculator
 ``````
 
